@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React component test with Enzyme click event on button 1`] = `ReactWrapper {}`;
+
+exports[`React component test with Enzyme should render correctly 1`] = `ShallowWrapper {}`;

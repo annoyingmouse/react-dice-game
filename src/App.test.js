@@ -1,53 +1,61 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { shallow, mount, render } from 'enzyme';
-import { Dice } from './components/Dice/'
 import App from './App'
+import { Dice } from './components/Dice/'
 
-describe('First React component test with Enzyme', () => {
+
+describe('React component test with Enzyme', () => {
   it('renders without crashing', () => {
-     shallow(<App />);
+    shallow(<App />);
+  });
+  it('should render correctly', () => {
+    const component = shallow(<App />);
+    expect(component).toMatchSnapshot();
+  });
+  it('click event on button', () => {
+    const component = mount(<App />);
+    component.find('#roll').simulate('click');
+    expect(component).toMatchSnapshot();
+    component.unmount();
+  });
+  it('Check state of disabled after mounting', () => {
+    const component = mount(<App />);
+    expect(component.instance().state.disabled).toBe(false);
+    component.unmount();
+  });
+  it('Check state of disabled after clicking the button', () => {
+    const component = mount(<App />);
+    component.find('#roll').simulate('click');
+    expect(component.instance().state.disabled).toBe(true);
+    component.unmount();
+  });
+  it('Check state of disabled after clicking the button', () => {
+    const component = mount(<App />);
+    expect(component.instance().state.games).toBe(0);
+    component.unmount();
+  });
+  it('Check state of disabled after clicking the button', () => {
+    const component = mount(<App />);
+    component.find('#roll').simulate('click');
+    expect(component.instance().state.games).toBe(1);
+    component.unmount();
   });
 });
 
-test('renders without crashing', () => {
-  const wrapper = mount(<App />)
-  const button = wrapper.find('button').first()
-  // const app = wrapper.find(".app").first()
-  // expect(wrapper.state().games).to.equal(0);
-  // const div = document.createElement('div')
-  // ReactDOM.render(<App />, div)
-  // ReactDOM.unmountComponentAtNode(div)
-});
-
-// test('player <Dice />', () => {
-//   const player = {
-//     name: 'You',
-//     score: 0,
-//     decorator: 'player',
-//     value: 1
-//   }
-//   const wrapper = shallow(<Dice player={player} />)
-// })
-
-// // test('computer <Dice />', () => {
-// //   const computer = {
-// //     name: 'Computer',
-// //     score: 0,
-// //     decorator: 'computer',
-// //     value: 1
-// //   }
-// //   const wrapper = mount(<Dice player={computer} />)
-// //   expect(wrapper.state().player.name).to.equal('Computer')
-
-// // })
-
-// // // test('<Score /> initial state', () => {
-// // //   let disabled = false
-// // //   const rollDice = () => {
-// // //     disabled = true
-// // //   }
-// // //   const wrapper = shallow(<Score disabled={disabled} roll={rollDice} />)
-// // //   const button = wrapper.find('button').first()
-// // //   expect(button).hasOwnProperty('disabled').not.toBeTruthy();
-// // // })
+// describe('Check Dice', () => {
+//   it('check there are two dice', () => {
+//     const component = mount(<App />);
+//     expect(component.find('.dice').length).toBe(2);
+//   });
+//   it('check there is one', () => {
+//     const computer = {
+//       name: 'Computer',
+//       score: 0,
+//       decorator: 'computer',
+//       value: 1
+//     }
+//     const component = shallow(<Dice player={computer} />);
+//     console.log("component", component);
+//     expect(component.find('.dice[data-value=1]').first()).toBe(1);
+//   });
+// });
