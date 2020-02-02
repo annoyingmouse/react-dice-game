@@ -1,0 +1,29 @@
+%column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.app {
+  height: 100vh;
+  width: 100vw;
+  background-color: #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "player computer" "score score";
+  .player { 
+    grid-area: player; 
+    @extend %column;
+  }
+  .computer { 
+    grid-area: computer; 
+    @extend %column;
+  }
+  .score { 
+    grid-area: score; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
