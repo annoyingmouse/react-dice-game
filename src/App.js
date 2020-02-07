@@ -23,6 +23,7 @@ class App extends Component {
       }
     }
     this.rollDice = this.rollDice.bind(this)
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.disabled) {
@@ -32,11 +33,30 @@ class App extends Component {
           original.disabled = false
           return original
         })
-      }, 1000);
+      }, 1000)
     }
   }
   componentWillUnmount () {
     clearTimeout(this.enableButton);
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+  updateDimensions () {
+    const windowWidth = window.innerWidth / 2
+    const windowHeight = window.innerHeight / 2
+    document.querySelectorAll(".container").forEach(element => {
+      console.log()
+      if(400 > windowWidth || 400 > windowHeight){
+        const scale = Math.min(
+          windowWidth / 400,    
+          windowHeight / 400
+        );
+        element.style.transform = `translate(-50%, -50%) scale(${scale})`
+      }
+    })
+  }
+  componentDidMount () {
+    this.updateDimensions()
+    window.addEventListener("resize", this.updateDimensions);
   }
   rollDice () {
     if (!this.state.disabled) {

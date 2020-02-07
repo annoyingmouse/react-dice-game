@@ -1,8 +1,13 @@
-%column {
+%container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;  
 }
 .app {
   height: 100vh;
@@ -12,13 +17,21 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: "player computer" "score score";
+  section {
+    resize: both;
+    position: relative;
+  }
   .player { 
     grid-area: player; 
-    @extend %column;
+    .container{
+      @extend %container;
+    }
   }
   .computer { 
     grid-area: computer; 
-    @extend %column;
+    .container{
+      @extend %container;
+    }
   }
   .score { 
     grid-area: score; 
