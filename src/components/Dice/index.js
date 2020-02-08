@@ -7,7 +7,8 @@ export const Dice = props => {
       <div className="container">
         <h2>{props.player.name}</h2>
         <div className="view">
-          <div className="dice" data-value={props.player.value}>
+          <div className="dice"
+            data-value={props.player.value}>
             <div className="side front">
               <div className="dot center"></div>
             </div>
