@@ -12,7 +12,7 @@ export const Score = props => {
           id="roll">
           Roll Dice!
         </button>
-        <h3>&nbsp;{props.message}&nbsp;</h3>
+        <h3>{props.message}</h3>
       </div>
     </section>
   )

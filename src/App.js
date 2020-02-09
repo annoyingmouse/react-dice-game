@@ -94,10 +94,12 @@ import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { Dice } from './components/Dice/'
 import { Score } from './components/Score/'
+import { connect } from 'react-redux'
+import { incrementCount, undisableButton } from './actions'
 
-export const App = () => {
+const App = (store) => {
   const [disabled, setDisabled] = useState(false)
-  const [games, setGames] = useState(0)
+  //const [games, setGames] = useState(0)
   const [player, setPlayer] = useState({
     name: 'You',
     score: 0,
@@ -112,10 +114,11 @@ export const App = () => {
   })
   const size = 375
   const [message, setMessage] = useState(`Games: 0`)
-  const rollDice = () => {
+  const rollDice = (e) => {
     if (!disabled) {
-      const game = games + 1
-      let newMessage = `Games ${game}. `
+      console.log(store)
+      store.dispatch(incrementCount())
+      let newMessage = `Games ${store.state.games}, `
       const p = { ...player }
       p.value = Math.floor(Math.random() * 6) + 1
       const c = { ...computer }
@@ -123,13 +126,13 @@ export const App = () => {
       const samePlayer = player.value === p.value
       const sameComputer = computer.value === c.value
       if (samePlayer && sameComputer) {
-        newMessage += `No change, `
+        newMessage += `no change, `
       }
       if (samePlayer && !sameComputer) {
-        newMessage += `No change for you, `
+        newMessage += `no change for you, `
       }
       if (!samePlayer && sameComputer) {
-        newMessage += `No change for the computer, `
+        newMessage += `no change for the computer, `
       }
       if (p.value < c.value) {
         c.score = c.score + 1
@@ -142,7 +145,6 @@ export const App = () => {
       if (p.value === c.value) {
         newMessage += `a draw! `
       }
-      setGames(game)
       setMessage(newMessage)
       setPlayer(p)
       setComputer(c)
@@ -167,6 +169,7 @@ export const App = () => {
     window.addEventListener('resize', handleResize)
     const enableButton = setTimeout(() => {
       setDisabled(false)
+      store.dispatch(undisableButton())
     }, 1000);
     return () => {
       clearTimeout(enableButton);
@@ -184,3 +187,5 @@ export const App = () => {
     </div>
   );
 }
+
+export default connect(state => ({ state }))(App)
