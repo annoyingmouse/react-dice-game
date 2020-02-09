@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { Dice } from './components/Dice/'
-import { Score } from './components/Score/'
+import Score from './components/Score/'
 import { connect } from 'react-redux'
-import { incrementCount, undisableButton } from './actions'
+import { incrementCount, setMessage, disableButton, undisableButton } from './actions'
 
-const App = (store) => {
+const App = (props) => {
   const [disabled, setDisabled] = useState(false)
-  //const [games, setGames] = useState(0)
   const [player, setPlayer] = useState({
     name: 'You',
     score: 0,
@@ -20,13 +19,12 @@ const App = (store) => {
     decorator: 'computer',
     value: 1
   })
-  const size = 375
-  const [message, setMessage] = useState(`Games: 0`)
+  const size = 500
   const rollDice = (e) => {
-    if (!disabled) {
-      console.log(store)
-      store.dispatch(incrementCount())
-      let newMessage = `Games ${store.state.games}, `
+    if (!props.state.disabled) {
+      props.dispatch(incrementCount())
+      props.dispatch(disableButton())
+      let message = `Games ${props.state.games}, `
       const p = { ...player }
       p.value = Math.floor(Math.random() * 6) + 1
       const c = { ...computer }
@@ -34,26 +32,26 @@ const App = (store) => {
       const samePlayer = player.value === p.value
       const sameComputer = computer.value === c.value
       if (samePlayer && sameComputer) {
-        newMessage += `no change, `
+        message += `no change, `
       }
       if (samePlayer && !sameComputer) {
-        newMessage += `no change for you, `
+        message += `no change for you, `
       }
       if (!samePlayer && sameComputer) {
-        newMessage += `no change for the computer, `
+        message += `no change for the computer, `
       }
       if (p.value < c.value) {
         c.score = c.score + 1
-        newMessage += `Computer wins! `
+        message += `Computer wins! `
       }
       if (p.value > c.value) {
         p.score = p.score + 1
-        newMessage += `Player wins! `
+        message += `Player wins! `
       }
       if (p.value === c.value) {
-        newMessage += `a draw! `
+        message += `a draw! `
       }
-      setMessage(newMessage)
+      props.dispatch(setMessage({ message }))
       setPlayer(p)
       setComputer(c)
       setDisabled(true)
@@ -77,7 +75,7 @@ const App = (store) => {
     window.addEventListener('resize', handleResize)
     const enableButton = setTimeout(() => {
       setDisabled(false)
-      store.dispatch(undisableButton())
+      props.dispatch(undisableButton())
     }, 1000);
     return () => {
       clearTimeout(enableButton);
@@ -90,8 +88,7 @@ const App = (store) => {
       <Dice player={computer} />
       <Score
         disabled={disabled}
-        roll={rollDice}
-        message={message} />
+        roll={rollDice} />
     </div>
   );
 }

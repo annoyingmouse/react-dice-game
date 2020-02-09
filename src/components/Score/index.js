@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import './style.scss'
+import { connect } from 'react-redux'
 
-export const Score = props => {
+const Score = props => {
   return (
     <section className="score">
       <div className="container">
@@ -12,8 +13,12 @@ export const Score = props => {
           id="roll">
           Roll Dice!
         </button>
-        <h3>{props.message}</h3>
+        <h3>{props.state.message}</h3>
       </div>
     </section>
   )
 }
+
+export default connect(state => ({
+  state
+}))(Score)
