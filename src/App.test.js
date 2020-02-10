@@ -5,6 +5,7 @@ import { Dice } from './components/Dice/'
 
 
 describe('React component test with Enzyme', () => {
+  // TODO fix tests now we've moved over from state to Redux
   it('renders without crashing', () => {
     shallow(<App />);
   });
