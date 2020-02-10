@@ -5,9 +5,7 @@ import Score from './components/Score/'
 import { connect } from 'react-redux'
 
 const App = (props) => {
-  const size = 500
-  const player = props.state.player
-  const computer = props.state.computer
+  const size = 375
   useEffect(() => {
     function handleResize () {
       const windowWidth = window.innerWidth
@@ -15,7 +13,7 @@ const App = (props) => {
       document.querySelectorAll(".container").forEach(element => {
         if (size > (windowWidth / 2) || size > (windowHeight / 2)) {
           const scale = Math.min(
-            (windowHeight / 2) / size,
+            (windowWidth / 2) / size,
             (windowHeight / 2) / size
           );
           element.style.transform = `translate(-50%, -50%) scale(${scale})`
@@ -30,8 +28,8 @@ const App = (props) => {
   })
   return (
     <div className="app">
-      <Dice player={player} />
-      <Dice player={computer} />
+      <Dice player={props.state.player} />
+      <Dice player={props.state.computer} />
       <Score />
     </div>
   );
