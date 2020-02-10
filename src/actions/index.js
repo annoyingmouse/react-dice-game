@@ -1,24 +1,7 @@
-export const incrementCount = () => ({
-  type: 'INCREMENT_GAME_COUNTER'
+export const enableButton = () => ({
+  type: 'ENABLE_BUTTON'
 })
 
-export const disableButton = () => ({
-  type: 'DISABLED_BUTTON'
-})
-
-export const undisableButton = () => ({
-  type: 'UNDISABLED_BUTTON'
-})
-
-export const playerWin = () => ({
-  type: 'PLAYER_WIN'
-})
-
-export const computerWin = () => ({
-  type: 'COMPUTER_WIN'
-})
-
-export const setMessage = (message) => ({
-  type: 'SET_MESSAGE',
-  message
+export const rollDice = () => ({
+  type: 'ROLL_DICE'
 })
